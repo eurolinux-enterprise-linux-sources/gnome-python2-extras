@@ -1,0 +1,177 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Context
+  (in-module "Gksu")
+  (parent "GObject")
+  (c-name "GksuContext")
+  (gtype-id "GKSU_TYPE_CONTEXT")
+)
+
+;; Enumerations and flags ...
+
+(define-enum ContextError
+  (in-module "Gksu")
+  (c-name "GksuContextError")
+  (gtype-id "GKSU_TYPE_CONTEXT_ERROR")
+  (values
+    '("xauth" "GKSU_CONTEXT_ERROR_XAUTH")
+    '("helper" "GKSU_CONTEXT_ERROR_HELPER")
+    '("nocommand" "GKSU_CONTEXT_ERROR_NOCOMMAND")
+    '("nopassword" "GKSU_CONTEXT_ERROR_NOPASSWORD")
+    '("fork" "GKSU_CONTEXT_ERROR_FORK")
+    '("exec" "GKSU_CONTEXT_ERROR_EXEC")
+    '("pipe" "GKSU_CONTEXT_ERROR_PIPE")
+    '("piperead" "GKSU_CONTEXT_ERROR_PIPEREAD")
+    '("wrongpass" "GKSU_CONTEXT_ERROR_WRONGPASS")
+    '("childfailed" "GKSU_CONTEXT_ERROR_CHILDFAILED")
+  )
+)
+
+
+;; From /usr/include/libgksu1.2/gksu-context.h
+
+(define-function gksu_context_new
+  (c-name "gksu_context_new")
+  (is-constructor-of "GksuContext")
+  (return-type "GksuContext*")
+  (parameters
+  )
+)
+
+(define-method free
+  (of-object "GksuContext")
+  (c-name "gksu_context_free")
+  (return-type "none")
+)
+
+(define-method set_user
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_user")
+  (return-type "none")
+  (parameters
+    '("gchar*" "username")
+  )
+)
+
+(define-method get_user
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_user")
+  (return-type "const-gchar*")
+)
+
+(define-method set_command
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_command")
+  (return-type "none")
+  (parameters
+    '("gchar*" "command")
+  )
+)
+
+(define-method get_command
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_command")
+  (return-type "const-gchar*")
+)
+
+(define-method set_password
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_password")
+  (return-type "none")
+  (parameters
+    '("gchar*" "password")
+  )
+)
+
+(define-method get_password
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_password")
+  (return-type "const-gchar*")
+)
+
+(define-method set_login_shell
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_login_shell")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_login_shell
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_login_shell")
+  (return-type "gboolean")
+)
+
+(define-method set_keep_env
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_keep_env")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_keep_env
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_keep_env")
+  (return-type "gboolean")
+)
+
+(define-method set_debug
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_debug")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_debug
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_debug")
+  (return-type "gboolean")
+)
+
+(define-method set_ssh_fwd
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_ssh_fwd")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_ssh_fwd
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_ssh_fwd")
+  (return-type "gboolean")
+)
+
+(define-function gksu_context_get_type
+  (c-name "gksu_context_get_type")
+  (return-type "GType")
+)
+
+(define-method run
+  (of-object "GksuContext")
+  (c-name "gksu_context_run")
+  (return-type "gboolean")
+  (parameters
+    '("GError**" "error")
+  )
+)
+
+(define-method sudo_run
+  (of-object "GksuContext")
+  (c-name "gksu_context_sudo_run")
+  (return-type "gboolean")
+  (parameters
+    '("GError**" "error")
+  )
+)
+
+
+
+;; From /usr/include/libgksu1.2/gksu.h

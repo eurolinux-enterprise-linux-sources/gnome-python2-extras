@@ -1,0 +1,745 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object RecentModel
+  (in-module "Egg")
+  (parent "GObject")
+  (c-name "EggRecentModel")
+  (gtype-id "EGG_TYPE_RECENT_MODEL")
+)
+
+(define-interface RecentView
+  (in-module "Egg")
+  (c-name "EggRecentView")
+  (gtype-id "EGG_TYPE_RECENT_VIEW")
+)
+
+(define-object RecentViewGtk
+  (in-module "Egg")
+  (parent "GObject")
+  (c-name "EggRecentViewGtk")
+  (gtype-id "EGG_TYPE_RECENT_VIEW_GTK")
+  (implements "EggRecentView")
+)
+
+(define-object RecentViewBonobo
+  (in-module "Egg")
+  (parent "GObject")
+  (c-name "EggRecentViewBonobo")
+  (gtype-id "EGG_TYPE_RECENT_VIEW_BONOBO")
+  (implements "EggRecentView")
+)
+
+(define-object RecentViewUIManager
+  (in-module "Egg")
+  (parent "GObject")
+  (c-name "EggRecentViewUIManager")
+  (gtype-id "EGG_TYPE_RECENT_VIEW_UIMANAGER")
+  (implements "EggRecentView")
+)
+
+(define-boxed RecentItem
+  (in-module "Egg")
+  (c-name "EggRecentItem")
+  (gtype-id "EGG_TYPE_RECENT_ITEM")
+)
+
+;; Enumerations and flags ...
+
+(define-enum RecentModelSort
+  (in-module "Egg")
+  (c-name "EggRecentModelSort")
+  (gtype-id "EGG_TYPE_RECENT_MODEL_SORT")
+  (values
+    '("mru" "EGG_RECENT_MODEL_SORT_MRU")
+    '("lru" "EGG_RECENT_MODEL_SORT_LRU")
+    '("mfu" "EGG_RECENT_MODEL_SORT_MFU")
+    '("lfu" "EGG_RECENT_MODEL_SORT_LFU")
+    '("none" "EGG_RECENT_MODEL_SORT_NONE")
+  )
+)
+
+
+;; From egg-recent-item.h
+
+(define-function recent_item_get_type
+  (c-name "egg_recent_item_get_type")
+  (return-type "GType")
+)
+
+(define-function recent_item_new
+  (c-name "egg_recent_item_new")
+  (is-constructor-of "EggRecentItem")
+  (return-type "EggRecentItem*")
+)
+
+(define-method ref
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_ref")
+  (return-type "EggRecentItem*")
+)
+
+(define-method unref
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_unref")
+  (return-type "EggRecentItem*")
+)
+
+(define-function recent_item_new_from_uri
+  (c-name "egg_recent_item_new_from_uri")
+  (return-type "EggRecentItem*")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-method set_uri
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_set_uri")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-method get_uri
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_uri")
+  (return-type "gchar*")
+)
+
+(define-method get_uri_utf8
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_uri_utf8")
+  (return-type "gchar*")
+)
+
+(define-method get_uri_for_display
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_uri_for_display")
+  (return-type "gchar*")
+)
+
+(define-method get_short_name
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_short_name")
+  (return-type "gchar*")
+)
+
+(define-method set_mime_type
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_set_mime_type")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "mime")
+  )
+)
+
+(define-method get_mime_type
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_mime_type")
+  (return-type "gchar*")
+)
+
+(define-method set_timestamp
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_set_timestamp")
+  (return-type "none")
+  (parameters
+    '("time_t" "timestamp")
+  )
+)
+
+(define-method get_timestamp
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_timestamp")
+  (return-type "time_t")
+)
+
+(define-method peek_uri
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_peek_uri")
+  (return-type "const-gchar*")
+)
+
+(define-method get_groups
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_groups")
+  (return-type "const-GList*")
+)
+
+(define-method in_group
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_in_group")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "group_name")
+  )
+)
+
+(define-method add_group
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_add_group")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "group_name")
+  )
+)
+
+(define-method remove_group
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_remove_group")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "group_name")
+  )
+)
+
+(define-method set_private
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_set_private")
+  (return-type "none")
+  (parameters
+    '("gboolean" "priv")
+  )
+)
+
+(define-method get_private
+  (of-object "EggRecentItem")
+  (c-name "egg_recent_item_get_private")
+  (return-type "gboolean")
+)
+
+;; From egg-recent-model.h
+
+(define-function recent_model_get_type
+  (c-name "egg_recent_model_get_type")
+  (return-type "GType")
+)
+
+(define-function recent_model_new
+  (c-name "egg_recent_model_new")
+  (is-constructor-of "EggRecentModel")
+  (return-type "EggRecentModel*")
+  (parameters
+    '("EggRecentModelSort" "sort")
+  )
+)
+
+(define-method set_filter_mime_types
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_set_filter_mime_types")
+  (return-type "none")
+  (parameters
+  )
+  (varargs #t)
+)
+
+(define-method set_filter_groups
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_set_filter_groups")
+  (return-type "none")
+  (parameters
+  )
+  (varargs #t)
+)
+
+(define-method set_filter_uri_schemes
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_set_filter_uri_schemes")
+  (return-type "none")
+  (parameters
+  )
+  (varargs #t)
+)
+
+(define-method set_sort
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_set_sort")
+  (return-type "none")
+  (parameters
+    '("EggRecentModelSort" "sort")
+  )
+)
+
+(define-method add_full
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_add_full")
+  (return-type "gboolean")
+  (parameters
+    '("EggRecentItem*" "item")
+  )
+)
+
+(define-method add
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_add")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-method delete
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_delete")
+  (return-type "gboolean")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-method clear
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_clear")
+  (return-type "none")
+)
+
+(define-method get_list
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_get_list")
+  (return-type "GList*")
+)
+
+(define-method changed
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_changed")
+  (return-type "none")
+)
+
+(define-method set_limit
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_set_limit")
+  (return-type "none")
+  (parameters
+    '("int" "limit")
+  )
+)
+
+(define-method get_limit
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_get_limit")
+  (return-type "int")
+)
+
+(define-method remove_expired
+  (of-object "EggRecentModel")
+  (c-name "egg_recent_model_remove_expired")
+  (return-type "none")
+)
+
+
+
+;; From egg-recent-util.h
+
+(define-function recent_util_escape_underlines
+  (c-name "egg_recent_util_escape_underlines")
+  (return-type "gchar*")
+  (parameters
+    '("const-gchar*" "uri")
+  )
+)
+
+(define-function recent_util_get_unique_id
+  (c-name "egg_recent_util_get_unique_id")
+  (return-type "gchar*")
+)
+
+(define-function recent_util_get_icon
+  (c-name "egg_recent_util_get_icon")
+  (return-type "GdkPixbuf*")
+  (parameters
+    '("GnomeIconTheme*" "theme")
+    '("const-gchar*" "uri")
+    '("const-gchar*" "mime_type")
+    '("int" "size")
+  )
+)
+
+
+
+;; From egg-recent-view-bonobo.h
+
+(define-function recent_view_bonobo_get_type
+  (c-name "egg_recent_view_bonobo_get_type")
+  (return-type "GType")
+)
+
+(define-function recent_view_bonobo_new
+  (c-name "egg_recent_view_bonobo_new")
+  (is-constructor-of "EggRecentViewBonobo")
+  (return-type "EggRecentViewBonobo*")
+  (parameters
+    '("BonoboUIComponent*" "uic")
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method set_ui_component
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_set_ui_component")
+  (return-type "none")
+  (parameters
+    '("BonoboUIComponent*" "uic")
+  )
+)
+
+(define-method set_ui_path
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_set_ui_path")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method get_ui_path
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_get_ui_path")
+  (return-type "gchar*")
+)
+
+(define-method get_ui_component
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_get_ui_component")
+  (return-type "BonoboUIComponent*")
+)
+
+(define-method show_icons
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_show_icons")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method show_numbers
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_show_numbers")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method set_tooltip_func
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_set_tooltip_func")
+  (return-type "none")
+  (parameters
+    '("EggRecentViewBonoboTooltipFunc" "func")
+    '("gpointer" "user_data")
+  )
+)
+
+(define-method set_icon_size
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_set_icon_size")
+  (return-type "none")
+  (parameters
+    '("GtkIconSize" "icon_size")
+  )
+)
+
+(define-method get_icon_size
+  (of-object "EggRecentViewBonobo")
+  (c-name "egg_recent_view_bonobo_get_icon_size")
+  (return-type "GtkIconSize")
+)
+
+
+
+;; From egg-recent-view-gtk.h
+
+(define-function recent_view_gtk_get_type
+  (c-name "egg_recent_view_gtk_get_type")
+  (return-type "GType")
+)
+
+(define-function recent_view_gtk_new
+  (c-name "egg_recent_view_gtk_new")
+  (is-constructor-of "EggRecentViewGtk")
+  (return-type "EggRecentViewGtk*")
+  (parameters
+    '("GtkWidget*" "menu")
+    '("GtkWidget*" "start_menu_item")
+  )
+)
+
+(define-method set_menu
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_menu")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "menu")
+  )
+)
+
+(define-method get_menu
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_get_menu")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_start_menu_item
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_start_menu_item")
+  (return-type "none")
+  (parameters
+    '("GtkWidget*" "menu_item")
+  )
+)
+
+(define-method get_start_menu_item
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_get_start_menu_item")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_leading_sep
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_leading_sep")
+  (return-type "none")
+  (parameters
+    '("gboolean" "val")
+  )
+)
+
+(define-method set_trailing_sep
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_trailing_sep")
+  (return-type "none")
+  (parameters
+    '("gboolean" "val")
+  )
+)
+
+(define-method show_icons
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_show_icons")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method show_numbers
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_show_numbers")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method set_tooltip_func
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_tooltip_func")
+  (return-type "none")
+  (parameters
+    '("EggRecentViewGtkTooltipFunc" "func")
+    '("gpointer" "user_data")
+  )
+)
+
+(define-method set_icon_size
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_set_icon_size")
+  (return-type "none")
+  (parameters
+    '("GtkIconSize" "icon_size")
+  )
+)
+
+(define-method get_icon_size
+  (of-object "EggRecentViewGtk")
+  (c-name "egg_recent_view_gtk_get_icon_size")
+  (return-type "GtkIconSize")
+)
+
+
+
+;; From egg-recent-view.h
+
+(define-function recent_view_get_type
+  (c-name "egg_recent_view_get_type")
+  (return-type "GtkType")
+)
+
+(define-method set_list
+  (of-object "EggRecentView")
+  (c-name "egg_recent_view_set_list")
+  (return-type "none")
+  (parameters
+    '("GSList*" "list")
+  )
+)
+
+(define-method clear
+  (of-object "EggRecentView")
+  (c-name "egg_recent_view_clear")
+  (return-type "none")
+)
+
+(define-method get_model
+  (of-object "EggRecentView")
+  (c-name "egg_recent_view_get_model")
+  (return-type "EggRecentModel*")
+)
+
+(define-method set_model
+  (of-object "EggRecentView")
+  (c-name "egg_recent_view_set_model")
+  (return-type "none")
+  (parameters
+    '("EggRecentModel*" "model")
+  )
+)
+
+
+
+;; From egg-recent-view-uimanager.h
+
+(define-function egg_recent_view_uimanager_get_type
+  (c-name "egg_recent_view_uimanager_get_type")
+  (return-type "GType")
+)
+
+(define-function egg_recent_view_uimanager_new
+  (c-name "egg_recent_view_uimanager_new")
+  (is-constructor-of "EggRecentViewUIManager")
+  (return-type "EggRecentViewUIManager*")
+  (parameters
+    '("GtkUIManager*" "uimanager")
+    '("const-gchar*" "path")
+    '("GCallback" "callback")
+    '("gpointer" "user_data")
+  )
+)
+
+(define-method set_uimanager
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_uimanager")
+  (return-type "none")
+  (parameters
+    '("GtkUIManager*" "uimanager")
+  )
+)
+
+(define-method get_uimanager
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_get_uimanager")
+  (return-type "GtkUIManager*")
+)
+
+(define-method set_path
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_path")
+  (return-type "none")
+  (parameters
+    '("const-gchar*" "path")
+  )
+)
+
+(define-method get_path
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_get_path")
+  (return-type "const-gchar*")
+)
+
+(define-method set_action_func
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_action_func")
+  (return-type "none")
+  (parameters
+    '("GCallback" "callback")
+    '("gpointer" "user_data")
+  )
+)
+
+(define-method set_leading_sep
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_leading_sep")
+  (return-type "none")
+  (parameters
+    '("gboolean" "val")
+  )
+)
+
+(define-method set_trailing_sep
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_trailing_sep")
+  (return-type "none")
+  (parameters
+    '("gboolean" "val")
+  )
+)
+
+(define-method show_icons
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_show_icons")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method show_numbers
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_show_numbers")
+  (return-type "none")
+  (parameters
+    '("gboolean" "show")
+  )
+)
+
+(define-method set_tooltip_func
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_tooltip_func")
+  (return-type "none")
+  (parameters
+    '("EggUIManagerTooltipFunc" "func")
+    '("gpointer" "user_data")
+  )
+)
+
+(define-method set_icon_size
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_icon_size")
+  (return-type "none")
+  (parameters
+    '("GtkIconSize" "icon_size")
+  )
+)
+
+(define-method get_icon_size
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_get_icon_size")
+  (return-type "GtkIconSize")
+)
+
+(define-method get_item
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_get_item")
+  (return-type "EggRecentItem*")
+  (parameters
+    '("GtkAction*" "action")
+  )
+)
+
+(define-method set_label_width
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_set_label_width")
+  (return-type "none")
+  (parameters
+    '("gint" "chars")
+  )
+)
+
+(define-method get_label_width
+  (of-object "EggRecentViewUIManager")
+  (c-name "egg_recent_view_uimanager_get_label_width")
+  (return-type "gint")
+)
+
+

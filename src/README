@@ -1,0 +1,41 @@
+This package contains the following python modules, wrapping similarly
+named libraries:
+
+  - gtkhtml2
+  - egg.trayicon, egg.recent (these are now deprecated)
+  - gtkmozembed
+  - gtkspell
+  - gdl
+  - gda
+  - gksu, gksu.ui
+
+
+If you're looking for one of the following python modules, they moved
+to the package gnome-python-desktop:
+
+  - gnomeapplet
+  - gnomeprint, gnomeprint.ui
+  - gtksourceview
+  - wnck
+  - totem.plparser
+  - gtop
+  - nautilusburn
+  - mediaprofiles
+
+== Installation Hints ==
+
+  When you run ./configure, the libraries available on the system
+(with respective header files) are automatically detected.  If one
+module was not enabled while you expected it to be, try looking at the
+file config.log; it may provide some useful clues as to why detection
+failed.
+
+  All the modules for which the corresponding libraries are available
+are going to be compiled when you type 'make'.  It is, however,
+possible to only build/install a specific module, by changing into the
+appropriate subdirectory.  For instance, to build only gtkspell, do
+this:
+
+  $ ./configure
+  $ cd gtkspell
+  $ make && make install

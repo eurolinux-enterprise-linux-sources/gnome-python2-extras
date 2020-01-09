@@ -1,0 +1,149 @@
+/* -*- Mode: C; c-basic-offset: 4 -*- */
+%%
+headers
+#include <Python.h>
+
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
+#include <libgtkhtml/gtkhtml.h>
+#include <libgtkhtml/view/htmlselection.h>
+
+#include "config.h"
+
+%%
+modulename gtkhtml2
+%%
+import gobject.GObject as PyGObject_Type
+import gtk.Layout as PyGtkLayout_Type
+%%
+ignore-glob
+ _*
+ *_get_type
+%%
+override html_document_write_stream kwargs
+static PyObject *
+_wrap_html_document_write_stream(PyGObject *self, PyObject *args,
+				 PyObject *kwargs)
+{
+    static char *kwlist[] = { "buffer", "len", NULL };
+    char *buffer;
+    int len;
+
+    /* tricky, allows user to override calculated text length. */
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+				     "s#|i:HtmlDocument.write_stream", kwlist,
+				     &buffer, &len, &len))
+        return NULL;
+    
+    html_document_write_stream(HTML_DOCUMENT(self->obj), buffer, len);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override html_stream_write kwargs
+static PyObject *
+_wrap_html_stream_write(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "buffer", "size", NULL };
+    char *buffer;
+    int size;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "s#|i:HtmlStream.write",
+				     kwlist, &buffer, &size, &size))
+        return NULL;
+    html_stream_write(HTML_STREAM(self->obj), buffer, size);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override html_stream_set_cancel_func kwargs
+
+struct _HtmlStreamCancelFuncData {
+    PyObject *func;
+    PyObject *data;
+};
+
+static void
+_htmlstreamcancelfuncdata_free(struct _HtmlStreamCancelFuncData *data)
+{
+    Py_DECREF(data->func);
+    Py_XDECREF(data->data);
+    g_free(data);
+}
+
+static void
+_htmlstreamcancelfunc(HtmlStream *stream,
+                     gpointer user_data,
+                     gpointer cancel_data)
+{
+    PyObject *pystream = pygobject_new(G_OBJECT(stream));
+    PyObject *ret;
+    struct _HtmlStreamCancelFuncData *data = cancel_data;
+
+      /* Currently there is no direct constructor for HtmlStream,
+       * therefore userdata is always None */
+    ret = PyObject_CallFunction(data->func, (data->data? "OOO" : "OO"),
+                                pystream, Py_None, data->data);
+    Py_DECREF(pystream);
+    if (ret)
+        Py_DECREF(ret);
+    else {
+        PyErr_Print();
+        PyErr_Clear();
+    }
+}
+
+
+static PyObject *
+_wrap_html_stream_set_cancel_func(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "abort_func", "cancel_data", NULL };
+    PyObject *abort_func, *cancel_data = NULL;
+    struct _HtmlStreamCancelFuncData *data;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O|O:HtmlStream.set_cancel_func",
+                                     kwlist, &abort_func, &cancel_data))
+        return NULL;
+    if (!PyCallable_Check(abort_func)) {
+        PyErr_SetString(PyExc_TypeError, "abort_func must be callable");
+        return NULL;
+    }
+    data = g_new(struct _HtmlStreamCancelFuncData, 1);
+    data->data = cancel_data;
+    data->func = abort_func;
+    if (cancel_data) Py_INCREF(cancel_data);
+    Py_INCREF(abort_func);
+    g_object_set_data_full(self->obj, "gnome-python-cancel-func", data,
+                           (GDestroyNotify) _htmlstreamcancelfuncdata_free);
+
+    html_stream_set_cancel_func(HTML_STREAM(self->obj), _htmlstreamcancelfunc, data);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+%%
+override html_document_open_stream kwargs
+
+static PyObject *
+_wrap_html_document_open_stream(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "mime_type", NULL };
+    char *mime_type;
+    int ret;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,"s:HtmlDocument.open_stream", kwlist, &mime_type))
+        return NULL;
+    
+    ret = html_document_open_stream(HTML_DOCUMENT(self->obj), mime_type);
+
+    if (ret) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    } else {
+        PyErr_SetString(PyExc_ValueError, "invalid mime type");
+        return NULL;
+    }
+}
+

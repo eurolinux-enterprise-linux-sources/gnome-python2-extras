@@ -1,0 +1,80 @@
+;; -*- scheme -*-
+; object definitions ...
+(define-object Dialog
+  (in-module "Gksuui")
+  (parent "GtkDialog")
+  (c-name "GksuuiDialog")
+  (gtype-id "GKSUUI_TYPE_DIALOG")
+)
+
+;; Enumerations and flags ...
+
+
+;; From /usr/include/libgksuui1.0/gksuui-convenience.h
+
+(define-function gksu_ask_password
+  (c-name "gksu_ask_password")
+  (return-type "gchar*")
+  (parameters
+    '("gchar*" "title")
+    '("gchar*" "message")
+    '("gboolean" "grab")
+  )
+)
+
+
+
+;; From /usr/include/libgksuui1.0/gksuui-dialog.h
+
+(define-function gksuui_dialog_get_type
+  (c-name "gksuui_dialog_get_type")
+  (return-type "GType")
+)
+
+(define-function gksuui_dialog_new
+  (c-name "gksuui_dialog_new")
+  (is-constructor-of "GksuuiDialog")
+  (return-type "GtkWidget*")
+)
+
+(define-method set_message
+  (of-object "GksuuiDialog")
+  (c-name "gksuui_dialog_set_message")
+  (return-type "none")
+  (parameters
+    '("gchar*" "message")
+  )
+)
+
+(define-method get_message
+  (of-object "GksuuiDialog")
+  (c-name "gksuui_dialog_get_message")
+  (return-type "const-gchar*")
+)
+
+(define-method set_icon
+  (of-object "GksuuiDialog")
+  (c-name "gksuui_dialog_set_icon")
+  (return-type "none")
+  (parameters
+    '("GdkPixbuf*" "icon")
+  )
+)
+
+(define-method get_icon
+  (of-object "GksuuiDialog")
+  (c-name "gksuui_dialog_get_icon")
+  (return-type "GtkWidget*")
+)
+
+(define-method get_password
+  (of-object "GksuuiDialog")
+  (c-name "gksuui_dialog_get_password")
+  (return-type "gchar*")
+)
+
+
+
+;; From /usr/include/libgksuui1.0/gksuui.h
+
+

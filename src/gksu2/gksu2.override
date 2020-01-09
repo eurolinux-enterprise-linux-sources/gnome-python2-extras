@@ -1,0 +1,237 @@
+/* -*- Mode: C; c-basic-offset: 4 -*- */
+%%
+headers
+#define NO_IMPORT_PYGOBJECT
+#include "pygobject.h"
+#include <libgksu/libgksu.h>
+
+#include "config.h"
+
+typedef struct {
+    PyObject *func, *data;
+} PyGkSuCustomNotify;
+
+%%
+modulename gksu2
+%%
+import gobject.GObject as PyGObject_Type
+import gobject.GError as PyGError_Type
+%%
+ignore
+gksu_context_free
+%%
+ignore-glob	
+    *_get_type
+    *_ref
+    *_unref
+%%
+override gksu_su_full kwargs
+
+
+#ifndef pyg_gerror_exception_check
+/* FIXME: this belongs in pygobject */
+/**
+ * pyg_gerror_exception_check:
+ * @error: a standard GLib GError ** output parameter
+ *
+ * Checks to see if a GError exception has been raised, and if so
+ * translates the python exception to a standard GLib GError.  If the
+ * raised exception is not a GError then PyErr_Print() is called.
+ *
+ * Returns: 0 if no exception has been raised, -1 if it is a
+ * valid gobject.GError, -2 otherwise.
+ */
+static gboolean
+pyg_gerror_exception_check(GError **error)
+{
+    PyObject *type, *value, *traceback;
+    PyObject *py_message, *py_domain, *py_code;
+    const char *bad_gerror_message;
+
+    PyErr_Fetch(&type, &value, &traceback);
+    if (type == NULL)
+        return 0;
+    PyErr_NormalizeException(&type, &value, &traceback);
+    if (value == NULL) {
+        PyErr_Restore(type, value, traceback);
+        PyErr_Print();
+        return -2;
+    }
+    if (!value || !PyErr_GivenExceptionMatches(type, (PyObject *) &PyGError_Type)) {
+        PyErr_Restore(type, value, traceback);
+        PyErr_Print();
+        return -2;
+    }
+    Py_DECREF(type);
+    Py_XDECREF(traceback);
+
+    py_message = PyObject_GetAttrString(value, "message");
+    if (!py_message || !PyString_Check(py_message)) {
+        bad_gerror_message = "gobject.GError instances must have a 'message' string attribute";
+        goto bad_gerror;
+    }
+
+    py_domain = PyObject_GetAttrString(value, "domain");
+    if (!py_domain || !PyString_Check(py_domain)) {
+        bad_gerror_message = "gobject.GError instances must have a 'domain' string attribute";
+        Py_DECREF(py_message);
+        goto bad_gerror;
+    }
+
+    py_code = PyObject_GetAttrString(value, "code");
+    if (!py_code || !PyInt_Check(py_code)) {
+        bad_gerror_message = "gobject.GError instances must have a 'code' int attribute";
+        Py_DECREF(py_message);
+        Py_DECREF(py_domain);
+        goto bad_gerror;
+    }
+
+    g_set_error(error, g_quark_from_string(PyString_AsString(py_domain)),
+                PyInt_AsLong(py_code), PyString_AsString(py_message));
+
+    Py_DECREF(py_message);
+    Py_DECREF(py_code);
+    Py_DECREF(py_domain);
+    return -1;
+
+bad_gerror:
+    Py_DECREF(value);
+    g_set_error(error, g_quark_from_static_string("pygobject"), 0, bad_gerror_message);
+    PyErr_SetString(PyExc_ValueError, bad_gerror_message);
+    PyErr_Print();
+    return -2;
+}
+
+#endif /* pyg_gerror_exception_check */
+
+static gchar*
+ask_pass_func (GksuContext *context,
+               gchar *prompt,
+               gpointer user_data,
+               GError **error)
+{
+    PyGILState_STATE    state;
+    PyGkSuCustomNotify  *cunote = user_data;
+    PyObject            *py_context, *retobj = NULL;
+    gchar               *ret = NULL;
+
+    state = pyg_gil_state_ensure();
+    
+    /* g_print ("I'm here at ask"); */
+    
+    py_context = pyg_boxed_new(GKSU_TYPE_CONTEXT, context, FALSE, FALSE);
+    
+    if (cunote->data)
+        retobj = PyEval_CallFunction(cunote->func, "(NsO)",
+                                     py_context, prompt,
+                                     cunote->data);
+    else
+        retobj = PyEval_CallFunction(cunote->func, "(Ns)",
+                                     py_context, prompt);
+    
+    if (retobj) {
+        ret = g_strdup(PyString_AsString(retobj));
+        Py_DECREF(retobj);
+    } else {
+        pyg_gerror_exception_check(error);
+        ret = NULL;
+    }
+    pyg_gil_state_release(state);
+    return ret;
+}
+
+static void
+pass_not_needed_func (GksuContext *context,
+                      gpointer data)
+{
+    PyGILState_STATE    state;
+    PyGkSuCustomNotify  *cunote = data;
+    PyObject            *py_context, *retobj;
+
+    g_assert(cunote->func);
+    
+    state = pyg_gil_state_ensure();
+    
+    py_context = pyg_boxed_new(GKSU_TYPE_CONTEXT, context, FALSE, FALSE);
+    
+    if (cunote->data)
+        retobj = PyEval_CallFunction(cunote->func, "(NO)",
+                                     py_context,
+                                     cunote->data);
+    else
+        retobj = PyEval_CallFunction(cunote->func, "(N)",
+                                     py_context);
+    if (retobj)
+        Py_DECREF(retobj);
+    else
+        PyErr_Print();
+    pyg_gil_state_release(state);
+}
+
+static PyObject *
+_wrap_gksu_su_full(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "context", "ask_pass", "ask_pass_data",
+                              "pass_not_needed", "pass_not_needed_data",
+                              NULL };
+
+    PyObject                *cb_ask_pass = Py_None, *cb_ask_pass_arg = NULL;
+    PyObject                *cb_no_pass = Py_None, *cb_no_pass_arg = NULL;
+    PyObject                *py_context;
+    PyGkSuCustomNotify      cunote_ask = { NULL, NULL};
+    PyGkSuCustomNotify      cunote_nopass = { NULL, NULL};
+    GError                  *error = NULL;
+    gboolean                ret;
+    PyObject                *py_ret;
+    GksuAskPassFunc         ask;
+    GksuPassNotNeededFunc   no_pass;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,"O|OOOO:GkSu.su_full", 
+                                     kwlist, &py_context, &cb_ask_pass,
+                                     &cb_ask_pass_arg, &cb_no_pass,
+                                     &cb_no_pass_arg))
+        return NULL;
+    
+    if (cb_ask_pass && cb_ask_pass != Py_None) {
+        if (!PyCallable_Check(cb_ask_pass)) {
+            PyErr_SetString(PyExc_TypeError, "second argument (ask_pass) must be callable or None");
+            return NULL;
+        }
+        cunote_ask.func = cb_ask_pass;
+        cunote_ask.data = cb_ask_pass_arg;
+    }
+    
+    if (cb_no_pass && cb_no_pass != Py_None) {
+        if (!PyCallable_Check(cb_no_pass)) {
+            PyErr_SetString(PyExc_TypeError, "fourth argument (pass_not_needed) must be callable or None");
+            return NULL;
+        }
+        cunote_nopass.func = cb_no_pass;
+        cunote_nopass.data = cb_no_pass_arg;
+        /* g_print ("I'm here at no pass"); */
+    }
+    
+    ask = (cb_ask_pass != Py_None) ? ask_pass_func : NULL;
+    no_pass = (cb_no_pass != Py_None) ? pass_not_needed_func : NULL;
+
+    pyg_begin_allow_threads;
+    ret = gksu_su_full(pyg_boxed_get(py_context, GksuContext),
+                       ask,
+                       &cunote_ask,
+                       no_pass,
+                       &cunote_nopass,
+                       &error);
+    pyg_end_allow_threads;
+
+    if (pyg_error_check(&error))
+        return NULL;
+
+    if (ret) {
+        py_ret = Py_True;
+        Py_INCREF(py_ret);
+    } else {
+        py_ret = Py_False;
+        Py_INCREF(py_ret);
+    }
+    return py_ret;
+}

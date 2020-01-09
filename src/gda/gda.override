@@ -1,0 +1,308 @@
+%%
+headers
+#include <Python.h>
+#include <pygobject.h>
+#include <libgda/gda-server-provider.h>
+#include <libgda/libgda.h>
+#include <libgda/gda-data-model-extra.h>
+#include <libgda/gda-data-model-iter.h>
+#include <libgda/gda-data-model-iter-extra.h>
+#include <libgda/gda-server-provider-extra.h>
+#include <libgda/gda-transaction-status-private.h> //TODO: Or can we just make the generator ignore this without removing it from the .defs by hand?
+#include <libgda/gda-enum-types.h>
+#include <libgda/gda-binreloc.h>
+#include <libgda/gda-blob-op.h>
+#include "gdaglue.h"
+#include "pygdavalue_conversions.h"
+
+#include "config.h"
+
+%%
+modulename gda
+%%
+import gobject.GObject as PyGObject_Type
+%%
+ignore-glob
+  *_get_type
+%%
+ignore
+  gda_config_get_string
+  gda_config_get_int
+  gda_config_get_float
+  gda_config_get_boolean
+  gda_init
+%%
+override gda_config_get_data_source_list kwargs
+static PyObject*
+_wrap_gda_config_get_data_source_list (PyObject* self) {
+	PyObject* plist = PyList_New (0);
+
+	if (!plist) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	GList *tmp, *list = gda_config_get_data_source_list();
+
+	for (tmp = list; tmp != NULL; tmp = tmp->next) {
+		PyObject* obj = pyg_boxed_new (GDA_TYPE_DATA_SOURCE_INFO, tmp->data, FALSE, FALSE);
+		PyList_Append (plist, obj);
+		Py_DECREF (obj);
+	}
+
+	g_list_free (list);
+	return plist;
+}
+%%
+override gda_config_get_provider_list kwargs
+static PyObject*
+_wrap_gda_config_get_provider_list (PyObject* self) {
+	PyObject* plist = PyList_New (0);
+
+	if (!plist) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	GList *tmp, *list = gda_config_get_provider_list();
+
+	for (tmp = list; tmp != NULL; tmp = tmp->next) {
+		PyObject* obj = pyg_boxed_new (GDA_TYPE_PROVIDER_INFO, tmp->data, FALSE, FALSE);
+		PyList_Append (plist, obj);
+		Py_DECREF (obj);
+	}
+
+	g_list_free (list);
+	return plist;
+}
+%%
+override gda_config_get_type kwargs
+static PyObject*
+_wrap_gda_config_get_type (PyObject* self, PyObject* fargs, PyObject* kwargs) {
+	static char* kwlist[] = { "path", NULL };
+	gchar* path = "/";
+
+	if (!PyArg_ParseTupleAndKeywords (fargs, kwargs, "|s:config_get_type", kwlist, &path)) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	gchar* keytype = gda_config_get_type (path);
+
+	if (keytype) {
+		PyObject *ret = PyString_FromString (ret);
+		g_free (keytype);
+		return ret;
+	}
+
+	Py_INCREF (Py_None);
+	return Py_None;
+}
+%%
+override gda_config_list_keys kwargs
+static PyObject*
+_wrap_gda_config_list_keys (PyObject* self, PyObject* fargs, PyObject* kwargs) {
+	static char* kwlist[] = { "path", NULL };
+	gchar* path = "/";
+
+	if (!PyArg_ParseTupleAndKeywords (fargs, kwargs, "|s:config_list_keys", kwlist, &path)) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	PyObject* plist = PyList_New (0);
+
+	if (!plist) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	GList *tmp, *list = gda_config_list_keys (path);
+
+	for (tmp = list; tmp != NULL; tmp = tmp->next) {
+		PyList_Append (plist, PyString_FromString (tmp->data));
+	}
+
+	g_list_free (list);
+	return plist;
+}
+%%
+override gda_connection_execute_command kwargs
+static PyObject*
+_wrap_gda_connection_execute_command (PyGObject* self, PyObject* fargs, PyObject* kwargs) {
+	static char* kwlist[] = { "cmd", "params", NULL };
+	PyGObject *cmd, *params;
+
+/* TODO: 
+	if (!PyArg_ParseTupleAndKeywords (fargs, kwargs, "O!O!:GdaConnection.execute_command",
+	      kwlist, &PyGdaCommand_Type, &cmd, &PyGdaParameterList_Type, &params)) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+*/
+
+	PyObject* plist = PyList_New (0);
+
+	if (!plist) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+        GError* error = NULL;
+	GList *tmp, *list = gda_connection_execute_command (GDA_CONNECTION (self->obj),
+	      GDA_COMMAND (cmd->obj), GDA_PARAMETER_LIST (params->obj), &error);
+
+        if (pyg_error_check(&error))
+          return Py_None;
+
+	for (tmp = list; tmp != NULL; tmp = tmp->next) {
+		PyObject* obj = pygobject_new (G_OBJECT (tmp->data));
+		PyList_Append (plist, obj);
+		Py_DECREF (obj);
+	}
+
+	g_list_free (list);
+
+	return plist;
+}
+%%
+override gda_connection_get_errors kwargs
+static PyObject*
+_wrap_gda_connection_get_errors (PyGObject* self) {
+	PyObject* plist = PyList_New (0);
+
+	if (!plist) {
+		Py_INCREF (Py_None);
+		return Py_None;
+	}
+
+	GList *tmp, *list = (GList*) gda_connection_get_errors (GDA_CONNECTION (self->obj));
+
+	for (tmp = list; tmp != NULL; tmp = tmp->next) {
+		PyObject* obj = pygobject_new (G_OBJECT (tmp->data));
+		PyList_Append (plist, obj);
+		Py_DECREF (obj);
+	}
+
+	/*gda_error_list_free (list);*/
+	return plist;
+}
+%%
+override gda_data_source_info_new kwargs
+static int
+_wrap_gda_data_source_info_new(PyGBoxed *self,
+                    PyObject *args,
+                    PyObject *kwargs)
+{
+    GdaDataSourceInfo* pInfo = g_new0 (GdaDataSourceInfo, 1);
+    pInfo->cnc_string = g_strdup(""); //libgda prints a warning if this is NULL.
+
+    self->boxed = pInfo;
+    self->free_on_dealloc = TRUE;
+    self->gtype = GDA_TYPE_DATA_SOURCE_INFO;
+    
+    return 0;
+}
+%%
+override-slot GdaDataSourceInfo.tp_setattr
+static int
+_wrap_gda_data_source_info_tp_setattr(PyGBoxed *self, char *attr, PyObject *value)
+{
+    /* Can't we auto-generate this somehow? The getattr() is auto-generated from the BoxedType .defs. murrayc */
+
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can't delete attributes");
+        return -1;
+    }
+
+    if (PyString_Check(value)) {
+        char* pchString = PyString_AsString(value);
+        if (!strcmp(attr, "name")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->name);
+            pyg_boxed_get(self, GdaDataSourceInfo)->name = g_strdup(pchString);
+            return 0;
+        } else if (!strcmp(attr, "username")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->username);
+            pyg_boxed_get(self, GdaDataSourceInfo)->username = g_strdup(pchString);       
+            return 0;
+        } else if (!strcmp(attr, "password")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->password); 
+            pyg_boxed_get(self, GdaDataSourceInfo)->password = g_strdup(pchString);
+            return 0;
+        } else if (!strcmp(attr, "description")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->description);
+            pyg_boxed_get(self, GdaDataSourceInfo)->description = g_strdup(pchString);
+            return 0;
+        } else if (!strcmp(attr, "provider")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->provider);
+            pyg_boxed_get(self, GdaDataSourceInfo)->provider = g_strdup(pchString);
+            return 0;
+        } else if (!strcmp(attr, "cnc_string")) {
+            g_free(pyg_boxed_get(self, GdaDataSourceInfo)->cnc_string);
+            pyg_boxed_get(self, GdaDataSourceInfo)->cnc_string = g_strdup(pchString);
+            return 0;
+        } 
+    }
+
+    PyErr_SetString(PyExc_AttributeError, "could not write attribute");
+    return -1;
+}
+%%
+ignore
+  gda_value_get_bigint
+  gda_value_get_biguint
+  gda_value_get_binary
+  gda_value_get_blob
+  gda_value_get_boolean
+  gda_value_get_date
+  gda_value_get_double
+  gda_value_get_geometric_point
+  gda_value_get_integer
+  gda_value_get_money
+  gda_value_get_numeric
+  gda_value_get_single
+  gda_value_get_smallint
+  gda_value_get_string
+  gda_value_get_time
+  gda_value_get_timestamp
+  gda_value_get_tinyint
+  gda_value_get_tinyuint
+  gda_value_get_uinteger
+  gda_dict_dump
+  gda_object_dump
+%%
+define GdaValue.get
+static PyObject*
+_wrap_gda_value_get (PyObject* self, PyObject* fargs, PyObject* kwargs) {
+    GdaValue* boxed = 0;
+
+    boxed = (GdaValue*)pyg_boxed_get (self, GdaValue);
+    return pygda_value_as_pyobject(boxed, TRUE /* make copy */);
+}
+%%
+define GdaValue.set
+static PyObject*
+_wrap_gda_value_set (PyObject* self, PyObject* fargs, PyObject* kwargs) {
+    static char *kwlist[] = { "value", NULL };
+    GdaValue* boxed = 0;
+    PyObject* input = 0;
+    int success = 0;
+
+    if (!PyArg_ParseTupleAndKeywords(fargs, kwargs,
+                                     "O!:Gda.Value.get", kwlist,
+                                     &PyObject_Type, &input)) {
+        return NULL;
+    }
+
+    boxed = (GdaValue*)pyg_boxed_get (self, GdaValue);
+
+    success = pygda_value_from_pyobject(boxed, input);
+    if (success)
+        return self;
+    else
+    {
+        Py_INCREF (Py_None);
+        return Py_None;
+    }
+}
+%%

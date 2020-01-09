@@ -1,0 +1,238 @@
+/* -*- Mode: C; c-basic-offset: 4 -*- */
+%%
+headers
+#define NO_IMPORT_PYGOBJECT
+#include <pygobject.h>
+
+#include "egg-recent.h"
+#include "egg-recent-view.h"
+#include "egg-recent-view-gtk.h"
+#include "egg-recent-view-bonobo.h"
+#include "eggtypebuiltins.h"
+#include "egg-recent-util.h"
+
+#include "config.h"
+
+
+#define EGG_TYPE_RECENT_VIEW_BONOBO (egg_recent_view_bonobo_get_type())
+#define EGG_TYPE_RECENT_VIEW_GTK (egg_recent_view_gtk_get_type())
+#define EGG_TYPE_RECENT_VIEW_UIMANAGER (egg_recent_view_uimanager_get_type())
+%%
+modulename recent
+%%
+ignore-glob
+  *_get_type
+%%
+ignore
+  egg_recent_view_clear
+%%
+import gobject.GObject as PyGObject_Type
+import gtk.Widget as PyGtkWidget_Type
+import bonobo.ui.Component as PyBonoboUIComponent_Type
+import gtk.UIManager as PyGtkUIManager_Type
+import gtk.Action as PyGtkAction_Type
+
+%%
+override egg_recent_model_set_filter_mime_types kwargs
+static PyObject*
+_wrap_egg_recent_model_set_filter_mime_types(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = {"mime_types", NULL};
+    PyObject *py_mime_types;
+    int i, len;
+    GSList *mime_types = NULL;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!:RecentModel.set_filter_mime_types",
+                                     kwlist, &PyList_Type, &py_mime_types))
+        return NULL;
+    len = PyList_Size(py_mime_types);
+    for (i = 0; i < len; ++i) {
+        PyObject *item = PyList_GET_ITEM(py_mime_types, i);
+        if (!PyString_Check(item)) {
+            PyErr_SetString(PyExc_TypeError, "parameter must be a list of strings");
+            g_slist_foreach(mime_types, (GFunc) g_free, NULL);
+            g_slist_free(mime_types);
+            return NULL;
+        }
+        mime_types = g_slist_append(mime_types, g_strdup(PyString_AsString(item)));
+    }
+    g_object_set(pygobject_get(self), "mime-filters", mime_types, NULL);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override egg_recent_model_set_filter_groups kwargs
+static PyObject*
+_wrap_egg_recent_model_set_filter_groups(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = {"groups", NULL};
+    PyObject *py_groups;
+    int i, len;
+    GSList *groups = NULL;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!:RecentModel.set_filter_groups",
+                                     kwlist, &PyList_Type, &py_groups))
+        return NULL;
+    len = PyList_Size(py_groups);
+    for (i = 0; i < len; ++i) {
+        PyObject *item = PyList_GET_ITEM(py_groups, i);
+        if (!PyString_Check(item)) {
+            PyErr_SetString(PyExc_TypeError, "parameter must be a list of strings");
+            g_slist_foreach(groups, (GFunc) g_free, NULL);
+            g_slist_free(groups);
+            return NULL;
+        }
+        groups = g_slist_append(groups, g_strdup(PyString_AsString(item)));
+    }
+    g_object_set(pygobject_get(self), "group-filters", groups, NULL);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override egg_recent_model_set_filter_uri_schemes kwargs
+static PyObject*
+_wrap_egg_recent_model_set_filter_uri_schemes(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = {"uri_schemes", NULL};
+    PyObject *py_uri_schemes;
+    int i, len;
+    GSList *uri_schemes = NULL;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!:RecentModel.set_filter_uri_schemes",
+                                     kwlist, &PyList_Type, &py_uri_schemes))
+        return NULL;
+    len = PyList_Size(py_uri_schemes);
+    for (i = 0; i < len; ++i) {
+        PyObject *item = PyList_GET_ITEM(py_uri_schemes, i);
+        if (!PyString_Check(item)) {
+            PyErr_SetString(PyExc_TypeError, "parameter must be a list of strings");
+            g_slist_foreach(uri_schemes, (GFunc) g_free, NULL);
+            g_slist_free(uri_schemes);
+            return NULL;
+        }
+        uri_schemes = g_slist_append(uri_schemes, g_strdup(PyString_AsString(item)));
+    }
+    g_object_set(pygobject_get(self), "scheme-filters", uri_schemes, NULL);
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+%%
+override egg_recent_item_new kwargs
+static int
+_wrap_egg_recent_item_new(PyGBoxed *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "uri", NULL };
+    char *uri = NULL;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|s:EggRecentItem.__init__", kwlist,
+                                     &uri))
+        return -1;
+    self->gtype = EGG_TYPE_RECENT_ITEM;
+    self->free_on_dealloc = FALSE;
+    if (uri)
+        self->boxed = egg_recent_item_new_from_uri(uri);
+    else
+        self->boxed = egg_recent_item_new();
+
+    if (!self->boxed) {
+        PyErr_SetString(PyExc_RuntimeError, "could not create EggRecentItem object");
+        return -1;
+    }
+    self->free_on_dealloc = TRUE;
+    return 0;
+}
+%%
+override egg_recent_view_uimanager_new kwargs
+
+typedef struct  {
+    PyObject *func;
+    PyObject *data;
+} RecentViewUIManagerData;
+
+static void
+__RecentViewUIManagerData_free(RecentViewUIManagerData *data)
+{
+    Py_DECREF(data->func);
+    Py_XDECREF(data->data);
+    g_free(data);
+}
+
+static void 
+__recent_view_uimanager_new_callback(GtkAction *action, RecentViewUIManagerData *data)
+{
+    PyObject *retobj;
+    PyGILState_STATE state;
+    
+    state = pyg_gil_state_ensure();
+    if (data->data)
+	retobj = PyEval_CallFunction(data->func, "NO", pygobject_new(G_OBJECT(action)),
+                                     data->data);
+    else
+	retobj = PyEval_CallFunction(data->func, "N", pygobject_new(G_OBJECT(action)));
+    if (retobj == NULL) {
+	PyErr_Print();
+	PyErr_Clear();
+    }
+    Py_XDECREF(retobj);
+    pyg_gil_state_release(state);
+}
+
+static int
+_wrap_egg_recent_view_uimanager_new(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "uimanager", "path", "callback", "data", NULL };
+    PyGObject *uimanager;
+    char *path;
+    PyObject *pycallback, *pydata = NULL;
+    RecentViewUIManagerData *data;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!sO|O:egg.recent.RecentViewUIManager.__init__",
+                                     kwlist, &PyGtkUIManager_Type, &uimanager,
+                                     &path, &pycallback, &pydata))
+        return -1;
+
+    if (!PyCallable_Check(pycallback)) {
+        PyErr_SetString(PyExc_TypeError, "3rd argument must be callable");
+        return -1;
+    }
+
+    data = g_new0(RecentViewUIManagerData, 1);
+    data->func = pycallback;
+    Py_INCREF(data->func);
+    data->data = pydata;
+    Py_XINCREF(data->data);
+
+    self->obj = (GObject *)egg_recent_view_uimanager_new(GTK_UI_MANAGER(uimanager->obj), path,
+                                                         (GCallback) __recent_view_uimanager_new_callback,
+                                                         data);
+
+      /* so that the data is freed eventually :| */
+    g_object_set_data_full(uimanager->obj, "py-egg-recent-uimanager-new-data", data,
+                           (GDestroyNotify) __RecentViewUIManagerData_free);
+
+    if (!self->obj) {
+        PyErr_SetString(PyExc_RuntimeError, "could not create EggRecentViewUIManager object");
+        return -1;
+    }
+    pygobject_register_wrapper((PyObject *)self);
+    return 0;
+}
+%%
+override egg_recent_model_get_list noargs
+static PyObject *
+_wrap_egg_recent_model_get_list(PyGObject *self)
+{
+    GList *list, *l;
+    PyObject *pylist;
+
+    list = egg_recent_model_get_list(EGG_RECENT_MODEL(self->obj));
+    pylist = PyList_New(0);
+    for (l = list; l; l = l->next)
+    {
+        PyObject * pyitem = pyg_boxed_new(EGG_TYPE_RECENT_ITEM, l->data, TRUE, TRUE);
+        PyList_Append(pylist, pyitem);
+        Py_DECREF(pyitem);
+    }
+    EGG_RECENT_ITEM_LIST_UNREF(list);
+    return pylist;
+}

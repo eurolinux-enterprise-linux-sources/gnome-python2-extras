@@ -1,0 +1,19 @@
+The kind of license that applies to gnome-python-extras varies for
+each python module.  Some are LGPL (see COPYING.LGPL), while others
+are GPL (see COPYING.GPL).
+
+The following table summarises the licenses of individual modules:
+
+Module name		License
+--------------------------------
+gda			LGPL
+gtkhtml2		LGPL
+egg.trayicon		LGPL
+egg.recent		GPL
+gtkmozembed		LGPL
+gtkspell		GPL (up to gtkspell2)
+gtkspell		LGPL (since gtkspell3)
+gdl			LGPL
+gksu			LGPL
+gksu2			LGPL
+

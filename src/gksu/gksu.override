@@ -1,0 +1,13 @@
+%%
+headers
+#define NO_IMPORT_PYGOBJECT
+#include "pygobject.h"
+#include <libgksu1.2/gksu-context.h>
+
+#include "config.h"
+
+%%
+modulename gksu
+%%
+import gobject.GObject as PyGObject_Type
+%%

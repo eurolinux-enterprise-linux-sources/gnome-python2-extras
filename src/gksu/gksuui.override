@@ -1,0 +1,15 @@
+%%
+headers
+#define NO_IMPORT_PYGOBJECT
+#include "pygobject.h"
+#include <libgksuui1.0/gksuui-convenience.h>
+#include <libgksuui1.0/gksuui-dialog.h>
+#include <libgksuui1.0/gksuui.h>
+
+%%
+modulename gksuui
+%%
+import gobject.GObject as PyGObject_Type
+import gtk.Dialog as PyGtkDialog_Type
+import gtk.gdk.Pixbuf as PyGdkPixbuf_Type
+%%

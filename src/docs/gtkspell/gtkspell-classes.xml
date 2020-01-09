@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" 
+[  
+<!ENTITY % entities SYSTEM "entities.docbook">
+%entities;
+<!ENTITY builddate SYSTEM "builddate.xml">
+]>
+<book id="pygtkspell" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <bookinfo>
+    <pubdate>&builddate;</pubdate>
+    <title>Python GtkSpell Reference Manual</title>
+    <edition>PyGtkSpell Reference Manual for PyGtkSpell &version;</edition>
+    <releaseinfo>For PyGtkSpell version &version;</releaseinfo>
+    <authorgroup>
+      <author>
+	<firstname>Gian Mario</firstname>
+	<surname>Tagliaretti</surname>
+      </author>
+    </authorgroup>
+    <abstract>
+      <para>This reference describes the classes of the Python GtkSpell module.</para>
+    </abstract>
+  </bookinfo>
+  <toc>
+  </toc>
+
+
+  <chapter id="gtkspell-class-reference" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>The PyGtkSpell Class Reference</title>
+
+    <!-- GTKSPELL OBJECTS -->
+
+    <xi:include href="gtkspell-gtkspell.xml"/>
+    
+  </chapter>
+
+</book>

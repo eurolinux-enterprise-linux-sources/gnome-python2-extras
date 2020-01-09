@@ -1,0 +1,59 @@
+/* -*- Mode: C -*-  */
+%%
+headers
+#include "config.h"
+
+#include <pygtk/pygtk.h>
+#include <gdl/gdl-dock.h>
+#include <gdl/libgdltypebuiltins.h>
+#ifndef HAVE_GDL_0_7
+# include <gdl/gdl-dock-bar.h>
+#endif
+
+#include "config.h"
+
+%%
+modulename gdl
+%%
+import gobject.GObject as PyGObject_Type
+import gtk.Bin as PyGtkBin_Type
+import gtk.Container as PyGtkContainer_Type
+import gtk.VBox as PyGtkVBox_Type
+import gtk.Widget as PyGtkWidget_Type
+import gtk.gdk.Pixbuf as PyGdkPixbuf_Type
+import gtk.Menu as PyGtkMenu_Type
+import gtk.HBox as PyGtkHBox_Type
+%%
+ignore-glob
+  *_get_type
+%%
+override gdl_dock_object_dock kwargs
+static PyObject *
+_wrap_gdl_dock_object_dock(PyGObject *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "requestor", "position", "other_data", NULL };
+    PyGObject *requestor;
+    PyObject *py_position = NULL;
+    GdlDockPlacement position;
+    PyObject *py_other_data = NULL;
+    GValue other_data = {0,};
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O!O|O:GdlDockObject.dock",
+                                     kwlist, &PyGdlDockObject_Type, &requestor,
+                                     &py_position, &py_other_data))
+        return NULL;
+    if (pyg_enum_get_value(GDL_TYPE_DOCK_PLACEMENT, py_position, (gint *)&position))
+        return NULL;
+
+    if (py_other_data) {
+        if (pyg_value_from_pyobject(&other_data, py_other_data)) {
+            PyErr_SetString(PyExc_ValueError, "unable to convert 'other_data'");
+            return NULL;
+        }
+    }
+    gdl_dock_object_dock(GDL_DOCK_OBJECT(self->obj), GDL_DOCK_OBJECT(requestor->obj), position,
+                         py_other_data? &other_data : NULL);
+    g_value_unset(&other_data);
+    Py_INCREF(Py_None);
+    return Py_None;
+}

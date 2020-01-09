@@ -1,0 +1,304 @@
+;; -*- scheme -*-
+
+(define-boxed Context
+  (in-module "Gksu")
+  (c-name "GksuContext")
+  (gtype-id "GKSU_TYPE_CONTEXT")
+  (copy-func "gksu_context_ref")
+  (release-func "gksu_context_unref")
+)
+
+;; Enumerations and flags ...
+
+(define-enum Error
+  (in-module "Gksu")
+  (c-name "GksuError")
+  (gtype-id "GKSU_TYPE_ERROR")
+  (values
+    '("xauth" "GKSU_ERROR_XAUTH")
+    '("helper" "GKSU_ERROR_HELPER")
+    '("nocommand" "GKSU_ERROR_NOCOMMAND")
+    '("nopassword" "GKSU_ERROR_NOPASSWORD")
+    '("fork" "GKSU_ERROR_FORK")
+    '("exec" "GKSU_ERROR_EXEC")
+    '("pipe" "GKSU_ERROR_PIPE")
+    '("piperead" "GKSU_ERROR_PIPEREAD")
+    '("wrongpass" "GKSU_ERROR_WRONGPASS")
+    '("childfailed" "GKSU_ERROR_CHILDFAILED")
+    '("not-allowed" "GKSU_ERROR_NOT_ALLOWED")
+    '("canceled" "GKSU_ERROR_CANCELED")
+    '("wrongautopass" "GKSU_ERROR_WRONGAUTOPASS")
+  )
+)
+
+;; From libgksu.h
+
+(define-function gksu_context_get_type
+  (c-name "gksu_context_get_type")
+  (return-type "GType")
+)
+
+(define-function gksu_context_new
+  (c-name "gksu_context_new")
+  (is-constructor-of "GksuContext")
+  (return-type "GksuContext*")
+  (parameters
+  )
+)
+
+(define-method ref
+  (of-object "GksuContext")
+  (c-name "gksu_context_ref")
+  (return-type "GksuContext*")
+)
+
+(define-method unref
+  (of-object "GksuContext")
+  (c-name "gksu_context_unref")
+  (return-type "none")
+)
+
+(define-function gksu_error_get_type
+  (c-name "gksu_error_get_type")
+  (return-type "GType")
+)
+
+(define-method set_user
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_user")
+  (return-type "none")
+  (parameters
+    '("gchar*" "username")
+  )
+)
+
+(define-method get_user
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_user")
+  (return-type "const-gchar*")
+)
+
+(define-method set_command
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_command")
+  (return-type "none")
+  (parameters
+    '("gchar*" "command")
+  )
+)
+
+(define-method get_command
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_command")
+  (return-type "const-gchar*")
+)
+
+(define-method set_login_shell
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_login_shell")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_login_shell
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_login_shell")
+  (return-type "gboolean")
+)
+
+(define-method set_keep_env
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_keep_env")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_keep_env
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_keep_env")
+  (return-type "gboolean")
+)
+
+(define-method set_description
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_description")
+  (return-type "none")
+  (parameters
+    '("gchar*" "description")
+  )
+)
+
+(define-method get_description
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_description")
+  (return-type "gchar*")
+)
+
+(define-method set_message
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_message")
+  (return-type "none")
+  (parameters
+    '("gchar*" "message")
+  )
+)
+
+(define-method get_message
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_message")
+  (return-type "gchar*")
+)
+
+(define-method set_alert
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_alert")
+  (return-type "none")
+  (parameters
+    '("gchar*" "alert")
+  )
+)
+
+(define-method get_alert
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_alert")
+  (return-type "gchar*")
+)
+
+(define-method set_grab
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_grab")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_grab
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_grab")
+  (return-type "gboolean")
+)
+
+(define-method set_launcher_context
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_launcher_context")
+  (return-type "none")
+  (parameters
+    '("SnLauncherContext*" "sn_context")
+  )
+)
+
+(define-method get_launcher_context
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_launcher_context")
+  (return-type "SnLauncherContext*")
+)
+
+(define-method set_debug
+  (of-object "GksuContext")
+  (c-name "gksu_context_set_debug")
+  (return-type "none")
+  (parameters
+    '("gboolean" "value")
+  )
+)
+
+(define-method get_debug
+  (of-object "GksuContext")
+  (c-name "gksu_context_get_debug")
+  (return-type "gboolean")
+)
+
+(define-method free
+  (of-object "GksuContext")
+  (c-name "gksu_context_free")
+  (return-type "none")
+)
+
+(define-function su_full
+  (c-name "gksu_su_full")
+  (return-type "none")
+  (parameters
+    '("GksuContext*" "context")
+    '("GksuAskPassFunc" "ask_pass")
+    '("gpointer" "ask_pass_data")
+    '("GksuPassNotNeededFunc" "pass_not_needed")
+    '("gpointer" "pass_not_needed_data")
+    '("GError**" "error")
+  )
+)
+
+(define-function su
+  (c-name "gksu_su")
+  (return-type "gboolean")
+  (parameters
+    '("gchar*" "command_line")
+    '("GError**" "error")
+  )
+)
+
+(define-function sudo_full
+  (c-name "gksu_sudo_full")
+  (return-type "gboolean")
+  (parameters
+    '("GksuContext*" "context")
+    '("GksuAskPassFunc" "ask_pass")
+    '("gpointer" "ask_pass_data")
+    '("GksuPassNotNeededFunc" "pass_not_needed")
+    '("gpointer" "pass_not_needed_data")
+    '("GError**" "error")
+  )
+)
+
+(define-function sudo
+  (c-name "gksu_sudo")
+  (return-type "gboolean")
+  (parameters
+    '("gchar*" "command_line")
+    '("GError**" "error")
+  )
+)
+
+(define-function run_full
+  (c-name "gksu_run_full")
+  (return-type "gboolean")
+  (parameters
+    '("GksuContext*" "context")
+    '("GksuAskPassFunc" "ask_pass")
+    '("gpointer" "ask_pass_data")
+    '("GksuPassNotNeededFunc" "pass_not_needed")
+    '("gpointer" "pass_not_needed_data")
+    '("GError**" "error")
+  )
+)
+
+(define-function run
+  (c-name "gksu_run")
+  (return-type "gboolean")
+  (parameters
+    '("gchar*" "command_line")
+    '("GError**" "error")
+  )
+)
+
+(define-function ask_password_full
+  (c-name "gksu_ask_password_full")
+  (return-type "gchar*")
+  (parameters
+    '("GksuContext*" "context")
+    '("gchar*" "prompt")
+    '("GError**" "error")
+  )
+)
+
+(define-function ask_password
+  (c-name "gksu_ask_password")
+  (return-type "gchar*")
+  (parameters
+    '("GError**" "error")
+  )
+)

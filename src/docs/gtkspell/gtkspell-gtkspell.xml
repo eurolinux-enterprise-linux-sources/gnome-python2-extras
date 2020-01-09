@@ -1,0 +1,208 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-gtkspell">
+  <refnamediv>
+    <refname>gtkspell.Spell</refname>
+    <refpurpose>Spell object for <link linkend="class-gtktextview">gtk.TextView</link></refpurpose>
+  </refnamediv>
+
+<!-- ************************** -->
+<!-- BEGIN OF GTKSPELL SYNOPSIS -->
+<!-- ************************** -->
+
+<refsect1>
+    <title>Synopsis</title>
+
+    <classsynopsis language="python">
+    <ooclass><classname>gtkspell.Spell</classname></ooclass>
+    <ooclass><classname></classname></ooclass>
+    
+    <constructorsynopsis language="python">
+	<methodname><link linkend="constructor-gtkspell">gtkspell.Spell</link></methodname>
+	<methodparam><parameter role="keyword">text</parameter></methodparam>
+    <methodparam><parameter role="keyword">language</parameter><initializer>None</initializer></methodparam>
+    </constructorsynopsis>
+    
+    <methodsynopsis language="python">
+	<methodname><link linkend="method-gtkspell--set-language">set_language</link></methodname>
+	<methodparam><parameter role="keyword">lang</parameter></methodparam>
+    </methodsynopsis>
+    
+    <methodsynopsis language="python">
+	<methodname><link linkend="method-gtkspell--recheck-all">recheck_all</link></methodname>
+	<methodparam></methodparam>
+    </methodsynopsis>
+    
+    <methodsynopsis language="python">
+	<methodname><link linkend="method-gtkspell--detach">detach</link></methodname>
+	<methodparam></methodparam>
+    </methodsynopsis>
+    
+</classsynopsis>
+
+<programlisting>
+<emphasis role="bold">Functions</emphasis>
+
+<methodsynopsis language="python">
+<methodname><link linkend="function-gtkspell--get-from-text-view">gtkspell.get_from_text_view</link></methodname>
+<methodparam><parameter role="keyword">view</parameter></methodparam>
+</methodsynopsis></programlisting>
+</refsect1>
+
+<!-- ************************** -->
+<!-- BEGIN OF GTKSPELL ANCESTRY -->
+<!-- ************************** -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gtkspell">gtkspell</link>
+</synopsis>
+</refsect1>
+
+<!-- ***************************** -->
+<!-- BEGIN OF GTKSPELL DESCRIPTION -->
+<!-- ***************************** -->
+
+<refsect1 id="description-gtkspell">
+    <title>Description</title>
+
+<para>
+The <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link>
+used in concert with <link linkend="class-gtktextview"><classname>gtk.TextView</classname></link> 
+provides mis-spelled word highlighting in red and offers a right click pop-up menu with suggested corrections.
+</para>
+</refsect1>
+
+<!-- ***************************** -->
+<!-- BEGIN OF GTKSPELL CONSTRUCTOR -->
+<!-- ***************************** -->
+
+<refsect1 id="constructor-gtkspell">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+	  <methodname>gtkspell.Spell</methodname>
+	  <methodparam><parameter role="keyword">text</parameter></methodparam>
+      <methodparam><parameter role="keyword">lang</parameter><initializer>None</initializer></methodparam>
+  </constructorsynopsis></programlisting>
+    
+  <variablelist>
+    <varlistentry>
+	    <term><parameter role="keyword">text</parameter>&nbsp;:</term>
+	    <listitem><simpara>a <link linkend="class-gtktextview"><classname>gtk.TextView</classname></link></simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><parameter role="keyword">lang</parameter>&nbsp;:</term>
+	    <listitem><simpara>the language to use, in a form like "en_US" 
+        or <literal>None</literal></simpara></listitem>
+    </varlistentry>
+    <varlistentry>
+	    <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	    <listitem><simpara>a new <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link>.
+        </simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> object.
+  </para>
+  
+  <note>
+    If <parameter>lang</parameter> is <literal>None</literal> then $LANG will be used, if also $LANG is <literal>None</literal> 
+    or not valid then English will be used as default.
+  </note>
+</refsect1>
+
+<!-- ************************* -->
+<!-- BEGIN OF GTKSPELL METHODS -->
+<!-- ************************* -->
+
+<refsect1>
+    <title>Methods</title>
+
+  <refsect2 id="method-gtkspell--set-language">
+      <title>gtkspell.Spell.set_language</title>
+      <programlisting><methodsynopsis language="python">
+	  <methodname>set_language</methodname>
+	  <methodparam><parameter role="keyword">lang</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+      
+      <variablelist>
+	    <varlistentry>
+	        <term><parameter role="keyword">lang</parameter>&nbsp;:</term>
+	        <listitem><simpara>the language to use in the form "en_US".</simpara></listitem>
+	    </varlistentry>
+      </variablelist>
+
+      <para>
+      The <methodname>set_language</methodname>() method set the language that have to be used while checking for mispelled words.
+	  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkspell--recheck-all">
+    <title>gtkspell.Spell.recheck_all</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>recheck_all</methodname>
+	  <methodparam></methodparam></methodsynopsis></programlisting>
+
+    <para>
+      The <methodname>recheck_all</methodname>() method recheck the spelling in the entire buffer.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkspell--detach">
+      <title>gtkspell.Spell.detach</title>
+      <programlisting><methodsynopsis language="python">
+	  <methodname>detach</methodname>
+	  <methodparam></methodparam>
+	  </methodsynopsis></programlisting>
+
+      <para>
+      The <methodname>detach</methodname>() method detaches this 
+      <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> 
+      from its <link linkend="class-gtktextview"><classname>gtk.TextView</classname></link>, use the function 
+      <methodname><link linkend="function-gtkspell--get-from-text-view">gtkspell.get_from_text_view</link></methodname> 
+      to retrieve a <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> from a 
+      <link linkend="class-gtktextview"><classname>gtk.TextView</classname></link>.
+	  </para>
+  </refsect2>
+</refsect1>  
+
+<!-- *************************** -->
+<!-- BEGIN OF GTKSPELL FUNCTIONS -->
+<!-- *************************** -->
+
+<refsect1>
+    <title>Functions</title>
+
+  <refsect2 id="function-gtkspell--get-from-text-view">
+    <title>gtkspell.get_from_text_view</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkspell.get_from_text_view</methodname>
+      <methodparam><parameter role="keyword">view</parameter></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+	    <varlistentry>
+        <term><parameter role="keyword">view</parameter>&nbsp;:</term>
+        <listitem><simpara> a <link linkend="class-gtktextview"><classname>gtk.TextView</classname></link>.
+        </simpara></listitem>
+      </varlistentry>
+	    <varlistentry>
+        <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> object 
+          or <literal>None</literal> if there is no <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> 
+          attached to <parameter>view</parameter>.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+
+      <para>
+        Retrieves the <link linkend="class-gtkspell"><classname>gtkspell.Spell</classname></link> object attached to a text view.
+      </para>
+
+  </refsect2>
+</refsect1> 
+</refentry>

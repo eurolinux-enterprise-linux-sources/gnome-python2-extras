@@ -1,0 +1,1300 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="class-gtkmozembed">
+  <refnamediv>
+    <refname>gtkmozembed.MozEmbed</refname>
+    <refpurpose>Embed Mozilla browser in Gtk application</refpurpose>
+  </refnamediv>
+
+<!-- ***************************** -->
+<!-- BEGIN OF GTKMOZEMBED SYNOPSIS -->
+<!-- ***************************** -->
+
+<refsect1>
+  <title>Synopsis</title>
+
+  <classsynopsis language="python">
+  <ooclass><classname>gtkmozembed.MozEmbed</classname></ooclass>
+  <ooclass><classname><link linkend="class-gtkbin">gtk.Bin</link></classname></ooclass>
+    
+  <constructorsynopsis language="python">
+	  <methodname><link linkend="constructor-gtkmozembed">gtkmozembed.MozEmbed</link></methodname>
+	  <methodparam><parameter role="keyword"></parameter></methodparam>
+  </constructorsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--load-url">load_url</link></methodname>
+	  <methodparam><parameter role="keyword">url</parameter></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--stop-load">stop_load</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--can-go-back">can_go_back</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--can-go-forward">can_go_forward</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+    <methodname><link linkend="method-gtkmozembed--go-back">go_back</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+    <methodname><link linkend="method-gtkmozembed--go-forward">go_forward</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--render-data">render_data</link></methodname>
+	  <methodparam><parameter role="keyword">data</parameter></methodparam>
+	  <methodparam><parameter role="keyword">len</parameter></methodparam>
+	  <methodparam><parameter role="keyword">base_uri</parameter></methodparam>
+	  <methodparam><parameter role="keyword">mime_type</parameter></methodparam>
+  </methodsynopsis>
+      
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--open-stream">open_stream</link></methodname>
+  	<methodparam><parameter role="keyword">base_uri</parameter></methodparam>
+  	<methodparam><parameter role="keyword">mime_type</parameter></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--append-data">append_data</link></methodname>
+  	<methodparam><parameter role="keyword">data</parameter></methodparam>
+	  <methodparam><parameter role="keyword">len</parameter></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--close-stream">close_stream</link></methodname>
+  	<methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--get-link-message">get_link_message</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--get-js-status">get_js_status</link></methodname>
+  	<methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--get-title">get_title</link></methodname>
+	  <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+	  <methodname><link linkend="method-gtkmozembed--get-location">get_location</link></methodname>
+    <methodparam></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--reload">reload</link></methodname>
+  	<methodparam><parameter role="keyword">flags</parameter></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--set-chrome-mask">set_chrome_mask</link></methodname>
+  	<methodparam><parameter role="keyword">flags</parameter></methodparam>
+  </methodsynopsis>
+    
+  <methodsynopsis language="python">
+  	<methodname><link linkend="method-gtkmozembed--get-chrome-mask">get_chrome_mask</link></methodname>
+  	<methodparam></methodparam>
+  </methodsynopsis>
+</classsynopsis>
+
+<programlisting>
+<emphasis role="bold">Functions</emphasis>
+
+<methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--push-startup">gtkmozembed.push_startup</link></methodname>
+<methodparam></methodparam>
+</methodsynopsis><methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--pop-startup">gtkmozembed.pop_startup</link></methodname>
+<methodparam></methodparam>
+</methodsynopsis><methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--gtk-moz-embed-set-comp-path">gtkmozembed.gtk_moz_embed_set_comp_path</link></methodname>
+<methodparam><parameter role="keyword">path</parameter></methodparam>
+</methodsynopsis><methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--gtk-moz-embed-set-profile-path">gtkmozembed.gtk_moz_embed_set_profile_path</link></methodname>
+<methodparam><parameter role="keyword">path</parameter></methodparam>
+<methodparam><parameter role="keyword">name</parameter></methodparam>
+</methodsynopsis><methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--set-comp-path">gtkmozembed.set_comp_path</link></methodname>
+<methodparam><parameter role="keyword">path</parameter></methodparam>
+</methodsynopsis><methodsynopsis language="python">
+<methodname><link linkend="function-gtkmozembed--set-profile-path">gtkmozembed.set_profile_path</link></methodname>
+<methodparam><parameter role="keyword">path</parameter></methodparam>
+<methodparam><parameter role="keyword">name</parameter></methodparam>
+</methodsynopsis></programlisting>
+</refsect1>
+
+<!-- ***************************** -->
+<!-- BEGIN OF GTKMOZEMBED ANCESTRY -->
+<!-- ***************************** -->
+
+<refsect1>
+    <title>Ancestry</title>
+
+<synopsis>+-- <link linkend="class-gobject">gobject.GObject</link>
+  +-- <link linkend="class-gtkobject">gtk.Object</link>
+    +-- <link linkend="class-gtkwidget">gtk.Widget</link>
+      +-- <link linkend="class-gtkbin">gtk.Bin</link>
+        +-- <link linkend="class-gtkmozembed">gtkmozembed.MozEmbed</link>
+</synopsis>
+</refsect1>
+
+<!-- ************************************** -->
+<!-- BEGIN OF GTKMOZEMBED SIGNAL PROTOTYPES -->
+<!-- ************************************** -->
+
+<refsect1>
+    <title>Signal Prototypes</title>
+    <variablelist>
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--link-message">link-message</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--js-status">js-status</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--location">location</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--title">title</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--progress">progress</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>cur</parameter></methodparam>
+            <methodparam><parameter>max</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--net-state">net-state</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>flags</parameter></methodparam>
+            <methodparam><parameter>status</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--net-start">net-start</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--net-stop">net-stop</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--new-window">new-window</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>retval</parameter></methodparam>
+            <methodparam><parameter>chromemask</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--visibility">visibility</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>visibility</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--destroy-browser">destroy-browser</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+
+    <varlistentry>
+        <term>"<link linkend="signal-gtkmozembed--open-uri">open-uri</link>"</term>
+        <listitem>
+          <methodsynopsis language="python"><methodname>callback</methodname>
+            <methodparam><parameter>mozembed</parameter></methodparam>
+            <methodparam><parameter>visibility</parameter></methodparam>
+            <methodparam><parameter>data</parameter></methodparam>
+            <methodparam><parameter>...</parameter></methodparam>
+          </methodsynopsis>
+        </listitem>
+      </varlistentry>
+   </variablelist>
+</refsect1>
+
+<!-- ******************************** -->
+<!-- BEGIN OF GTKMOZEMBED DESCRIPTION -->
+<!-- ******************************** -->
+
+<refsect1 id="description-gtkmozembed">
+  <title>Description</title>
+
+  <para>
+    GtkMozEmbed is an easy-to-use widget that will allow you to embed a Mozilla browser window into your Gtk application.
+  </para>
+
+  <para>
+    It's designed to be easy to use and uncomplicated to make the barrier for use as low as possible. 
+    This means that the functionality exposed should cover about 80% of uses. If you want to get at some of Mozilla's higher brain 
+    functions it means that you will have to write your own embedding widget.
+  </para>
+
+  <para>Here's a small example:</para>
+  <programlisting language="python">
+import gtk
+import gtkmozembed
+
+class TinyGecko:
+    def __init__(self):
+        self.moz = gtkmozembed.MozEmbed()
+                
+        win = gtk.Window()
+        win.add(self.moz)
+        win.show_all()
+        # self.moz.load_url('http://www.pygtk.org')
+        data = '&lt;html>&lt;head>&lt;title>Hello&lt;/title>&lt;/head>&lt;body>pygtk dev&lt;/body>&lt;/html>'
+        self.moz.render_data(data, long(len(data)), 'file:///', 'text/html')
+
+if __name__ == '__main__':
+  TinyGecko()
+  gtk.main()
+  </programlisting>
+
+</refsect1>
+
+<!-- ******************************** -->
+<!-- BEGIN OF GTKMOZEMBED CONSTRUCTOR -->
+<!-- ******************************** -->
+
+<refsect1 id="constructor-gtkmozembed">
+  <title>Constructor</title>
+
+  <programlisting><constructorsynopsis language="python">
+	  <methodname>gtkmozembed.MozEmbed</methodname>
+	  <methodparam><parameter role="keyword"></parameter></methodparam>
+  </constructorsynopsis></programlisting>
+    
+  <variablelist>
+    <varlistentry>
+	    <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	    <listitem><simpara>a new <link linkend="class-gtkmozembed"><classname>gtkmozembed.MozEmbed</classname></link> object.
+        </simpara></listitem>
+    </varlistentry>
+  </variablelist>
+
+  <para>
+    Creates a new <link linkend="class-gtkmozembed"><classname>gtkmozembed.MozEmbed</classname></link> object.
+  </para>
+</refsect1>
+
+<!-- **************************** -->
+<!-- BEGIN OF GTKMOZEMBED METHODS -->
+<!-- **************************** -->
+
+<refsect1>
+  <title>Methods</title>
+
+  <refsect2 id="method-gtkmozembed--load-url">
+    <title>gtkmozembed.MozEmbed.load_url</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>load_url</methodname>
+  	    <methodparam><parameter role="keyword">url</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+	    <varlistentry>
+  	    <term><parameter role="keyword">url</parameter>&nbsp;:</term>
+    	  <listitem><simpara>The <parameter>url</parameter> that have to be loaded.</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The <methodname>load_url</methodname>() method starts loading a url in the embedding widget. All loads are asynchronous. The url argument 
+      should be in the form of http://www.gnome.org.
+	  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--stop-load">
+    <title>gtkmozembed.MozEmbed.stop_load</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>stop_load</methodname>
+	  <methodparam></methodparam></methodsynopsis></programlisting>
+
+    <para>
+      The <methodname>stop_load</methodname>() method will allow you to stop the load of a document that is being loaded in the widget.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--can-go-back">
+    <title>gtkmozembed.MozEmbed.can_go_back</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>can_go_back</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara>if <literal>True</literal> you can go back in the navigation history.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>can_go_back</methodname>() method return whether or not you can go backwards in the document's navigation history.
+    It will return <literal>True</literal> if it can go backwards, <literal>False</literal> if it can't.
+  </para>
+  </refsect2>
+   
+  <refsect2 id="method-gtkmozembed--can-go-forward">
+    <title>gtkmozembed.MozEmbed.can_go_forward</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>can_go_forward</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> <literal>True</literal> if you can go forward in the navigation history.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>can_go_forward</methodname>() method return whether or not you can go forwards in the document's navigation history.
+    It will return <literal>True</literal> if it can go forwards, <literal>False</literal> if it can't.
+  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--go-back">
+    <title>gtkmozembed.MozEmbed.go_back</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>go_back</methodname>
+	  <methodparam></methodparam></methodsynopsis></programlisting>
+
+    <para>
+      The <methodname>go_back</methodname>() method will go backwards one step in the document's navigation history.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--go-forward">
+    <title>gtkmozembed.MozEmbed.go_forward</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>go_forward</methodname>
+	  <methodparam></methodparam></methodsynopsis></programlisting>
+
+    <para>
+      The <methodname>go_forward</methodname>() method will go forwards one step in the document's navigation history.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--render-data">
+    <title>gtkmozembed.MozEmbed.render_data</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>render_data</methodname>
+  	    <methodparam><parameter role="keyword">data</parameter></methodparam>
+        <methodparam><parameter role="keyword">len</parameter></methodparam>
+        <methodparam><parameter role="keyword">base_uri</parameter></methodparam>
+        <methodparam><parameter role="keyword">mime_type</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+	    <varlistentry>
+  	    <term><parameter role="keyword">data</parameter>&nbsp;:</term>
+    	  <listitem><simpara> a chunk of random data.</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">len</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the lenght of the data.</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">base_uri</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the base uri.</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">mime_type</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the mime type.</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The <methodname>render_data</methodname>() method will allow you to take a chunk of random data and render it into the document.
+      You need to pass in the data and the length of the data. The base_uri is used to resolve internal references in the document
+      and the mime_type is used to determine how to render the document internally.
+	  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--open-stream">
+    <title>gtkmozembed.MozEmbed.open_stream</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>open_stream</methodname>
+        <methodparam><parameter role="keyword">base_uri</parameter></methodparam>
+        <methodparam><parameter role="keyword">mime_type</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">base_uri</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the base uri.</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">mime_type</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the mime type.</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The <methodname>open_stream</methodname>() method is used to start loading a document from an external source into the embedding widget.
+      You need to pass in the <parameter>base_uri</parameter> for resolving internal links and and the <parameter>mime_type</parameter> of the document.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--append-data">
+    <title>gtkmozembed.MozEmbed.append_data</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>append_data</methodname>
+        <methodparam><parameter role="keyword">data</parameter></methodparam>
+        <methodparam><parameter role="keyword">len</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">data</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the data to append in the stream.</simpara></listitem>
+	    </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">len</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the lenght of data.</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The <methodname>append_data</methodname>() allows you to append data to an already opened stream in the widget. 
+      You need to pass in the data that you want to append to the document and its length.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--close-stream">
+    <title>gtkmozembed.MozEmbed.close_stream</title>
+
+    <programlisting><methodsynopsis language="python">
+	  <methodname>close_stream</methodname>
+	  <methodparam></methodparam></methodsynopsis></programlisting>
+
+    <para>
+      The <methodname>close_stream</methodname>() method closes the stream that you have been using to append data manually to the embedding widget.
+    </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--get-link-message">
+    <title>gtkmozembed.MozEmbed.get_link_message</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>get_link_message</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the current link message.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>get_link_message</methodname>() returns the current link message of the document if there is one.
+  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--get-js-status">
+    <title>gtkmozembed.MozEmbed.get_js_status</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>get_js_status</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the js_status message.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>get_js_status</methodname>() returns the js_status message if there is one.
+  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--get-title">
+    <title>gtkmozembed.MozEmbed.get_title</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>get_title</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the current title.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>get_title</methodname>() returns the the current title for a document.
+  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--get-location">
+    <title>gtkmozembed.MozEmbed.get_location</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>get_location</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the current location.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>get_location</methodname>() returns the current location of the document.
+  </para>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--reload">
+    <title>gtkmozembed.MozEmbed.reload</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>reload</methodname>
+        <methodparam><parameter role="keyword">flags</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">flags</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the flags argument can be used to control the behaviour of the reload.</simpara></listitem>
+	    </varlistentry>
+   </variablelist>
+   
+    <para>
+      The <methodname>reload</methodname>() reloads the document. The flags argument can be used to control the behaviour of the reload.
+      The flags argument can be one of the following values:
+    </para>
+    
+    <variablelist>
+      <varlistentry><term><literal>gtkmozembed.FLAG_RELOADNORMAL</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_RELOADBYPASSCACHE</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_RELOADBYPASSPROXY</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_RELOADBYPASSPROXYANDCACHE</literal></term></varlistentry>
+    </variablelist>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--set-chrome-mask">
+    <title>gtkmozembed.MozEmbed.set_chrome_mask</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>set_chrome_mask</methodname>
+        <methodparam><parameter role="keyword">flags</parameter></methodparam>
+	    </methodsynopsis></programlisting>
+      
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">flags</parameter>&nbsp;:</term>
+    	  <listitem><simpara> the flags argument </simpara></listitem>
+	    </varlistentry>
+   </variablelist>
+
+    <para>
+      The <methodname>set_chrome_mask</methodname>() is used to set the chome mask for this window. 
+      It can be the logical or of any of the following values:
+    </para>
+    
+    <variablelist>
+      <varlistentry><term><literal>gtkmozembed.FLAG_DEFAULTCHROME</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_WINDOWBORDERSON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_WINDOWCLOSEON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_WINDOWRESIZEON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_MENUBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_TOOLBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_LOCATIONBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_STATUSBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_PERSONALTOOLBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_SCROLLBARSON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_TITLEBARON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_EXTRACHROMEON</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_WINDOWRAISED</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_WINDOWLOWERED</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_CENTERSCREEN</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_DEPENDENT</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_MODAL</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_OPENASDIALOG</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_OPENASCHROME</literal></term></varlistentry>
+      <varlistentry><term><literal>gtkmozembed.FLAG_ALLCHROME</literal></term></varlistentry>
+    </variablelist>
+  </refsect2>
+
+  <refsect2 id="method-gtkmozembed--get-chrome-mask">
+    <title>gtkmozembed.MozEmbed.get_chrome_mask</title>
+    <programlisting><methodsynopsis language="python">
+	    <methodname>get_chrome_mask</methodname>
+	    <methodparam></methodparam>
+	    </methodsynopsis></programlisting>
+      
+      <variablelist>
+	      <varlistentry>
+	      <term><emphasis>Returns</emphasis>&nbsp;:</term>
+	      <listitem><simpara> the current chome mask for this window.</simpara></listitem>
+	      </varlistentry>
+      </variablelist>
+
+  <para>
+    The <methodname>get_chrome_mask</methodname>() gets the current chome mask for this window. 
+    Please see the documentation for 
+    <link linkend="method-gtkmozembed--set-chrome-mask"><methodname>gtkmozembed.MozEmbed.set_chrome_mask</methodname></link> 
+    for the value of the return mask.
+  </para>
+  </refsect2>
+</refsect1>
+<!-- ****************************** -->
+<!-- BEGIN OF GTKMOZEMBED FUNCTIONS -->
+<!-- ****************************** -->
+
+<refsect1>
+    <title>Functions</title>
+
+  <refsect2 id="function-gtkmozembed--push-startup">
+    <title>gtkmozembed.push_startup</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.push_startup</methodname>
+      <methodparam></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+    </variablelist>
+
+      <para>
+        The <methodname>push_startup</methodname>() method 
+      </para>
+  </refsect2>
+
+  <refsect2 id="function-gtkmozembed--pop-startup">
+    <title>gtkmozembed.pop_startup</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.pop_startup</methodname>
+      <methodparam></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+    </variablelist>
+
+      <para>
+        The <methodname>pop_startup</methodname>() method
+      </para>
+  </refsect2>
+
+  <refsect2 id="function-gtkmozembed--gtk-moz-embed-set-comp-path">
+    <title>gtkmozembed.gtk_moz_embed_set_comp_path</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.gtk_moz_embed_set_comp_path</methodname>
+        <methodparam><parameter role="keyword">path</parameter></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">path</parameter>&nbsp;:</term>
+    	  <listitem><simpara>the path to set.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+      <warning>
+	This function has been deprecated, use
+	<methodname><link linkend="function-gtkmozembed--set-comp-path">gtkmozembed.set_comp_path</link></methodname>
+	instead.
+      </warning>
+      <para>
+        The <methodname>gtk_moz_embed_set_comp_path</methodname>() function 
+      </para>
+  </refsect2>
+
+  <refsect2 id="function-gtkmozembed--gtk-moz-embed-set-profile-path">
+    <title>gtkmozembed.gtk_moz_embed_set_profile_path</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.gtk_moz_embed_set_profile_path</methodname>
+	  <methodparam><parameter role="keyword">path</parameter></methodparam>
+	  <methodparam><parameter role="keyword">name</parameter></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">path</parameter>&nbsp;:</term>
+    	  <listitem><simpara>the path to set.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">name</parameter>&nbsp;:</term>
+    	  <listitem><simpara>a name for the profile.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+      <warning>
+	This function has been deprecated, use
+	<methodname><link linkend="function-gtkmozembed--set-comp-path">gtkmozembed.set_profile_path</link></methodname>
+	instead.
+      </warning>
+      <para>
+        The <methodname>gtk_moz_embed_set_profile_path</methodname>() function
+      </para>
+  </refsect2>
+  
+  <refsect2 id="function-gtkmozembed--set-comp-path">
+    <title>gtkmozembed.set_comp_path</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.set_comp_path</methodname>
+        <methodparam><parameter role="keyword">path</parameter></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">path</parameter>&nbsp;:</term>
+    	  <listitem><simpara>the path to set.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+
+      <para>
+        The <methodname>set_comp_path</methodname>() function 
+      </para>
+  </refsect2>
+
+  <refsect2 id="function-gtkmozembed--set-profile-path">
+    <title>gtkmozembed.set_profile_path</title>
+    <programlisting><methodsynopsis language="python">
+  	  <methodname>gtkmozembed.set_profile_path</methodname>
+	  <methodparam><parameter role="keyword">path</parameter></methodparam>
+	  <methodparam><parameter role="keyword">name</parameter></methodparam>
+      </methodsynopsis></programlisting>
+        
+    <variablelist>
+      <varlistentry>
+  	    <term><parameter role="keyword">path</parameter>&nbsp;:</term>
+    	  <listitem><simpara>the path to set.</simpara></listitem>
+      </varlistentry>
+      <varlistentry>
+  	    <term><parameter role="keyword">name</parameter>&nbsp;:</term>
+    	  <listitem><simpara>a name for the profile.</simpara></listitem>
+      </varlistentry>
+    </variablelist>
+
+      <para>
+        The <methodname>set_profile_path</methodname>() function
+      </para>
+  </refsect2>
+</refsect1>
+  
+<!-- **************************** -->
+<!-- BEGIN OF GTKMOZEMBED SIGNALS -->
+<!-- **************************** --> 
+ 
+<refsect1>
+    <title>Signals</title>
+
+  <refsect2 id="signal-gtkmozembed--link-message">
+    <title>The "link-message" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "link-message" signal is emitted when the link message changes. 
+      This happens when the user moves the mouse over a link in a web page. 
+      Please use <link linkend="method-gtkmozembed--get-link-message"><methodname>get_link_message</methodname></link> 
+      to get the actual value of the link message.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--js-status">
+    <title>The "js-status" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "js_status" signal is emitted when the JavaScript status message changes. 
+      Please use <link linkend="method-gtkmozembed--get-js-status"><methodname>get_js_status</methodname></link> 
+      to get the actual value of the js status message.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--location">
+    <title>The "location" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "location" signal is emitted any time that the location of the document has changed. 
+      Please use <link linkend="method-gtkmozembed--get-location"><methodname>get_location</methodname></link> 
+      to get the actual value of the location.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--title">
+    <title>The "title" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "title" signal is emitted any time that the title of a document has changed. 
+      Please use the <link linkend="method-gtkmozembed--get-title"><methodname>get_title</methodname></link>
+      call to get the actual value of the title.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--progress">
+    <title>The "progress" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+    <methodparam><parameter>cur</parameter></methodparam>
+    <methodparam><parameter>max</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>cur</parameter>&nbsp;:</term>
+          <listitem><simpara> indicates how much of the document has been downloaded.</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>max</parameter>&nbsp;:</term>
+          <listitem><simpara> indicates the length of the document. 
+          If the value of <parameter>max</parameter> is less than one, the full length of the document can not be determined.</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "progress" signal is emitted any time that there is a change in the progress of loading a document.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--net-state">
+    <title>The "net-state" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+    <methodparam><parameter>flags</parameter></methodparam>
+    <methodparam><parameter>status</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>flags</parameter>&nbsp;:</term>
+          <listitem><simpara> .....</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>status</parameter>&nbsp;:</term>
+          <listitem><simpara> .....</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "net-state" signal is emitted when there's a change in the state of the loading of a document.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--net-start">
+    <title>The "net-start" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "net-start" signal is emitted any time that the load of a document has been started.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--net-stop">
+    <title>The "net-stop" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "net-stop" signal is emitted any time that the loading of a document has completed.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--new-window">
+    <title>The "new-window" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+    <methodparam><parameter>retval</parameter></methodparam>
+    <methodparam><parameter>chromemask</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>retval</parameter>&nbsp;:</term>
+          <listitem><simpara> .....</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>chromemask</parameter>&nbsp;:</term>
+          <listitem><simpara> .....</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "new-window" signal is emitted any time that a new toplevel window is requested by the document. 
+      This will happen in the case of a window.open() in JavaScript. 
+      Responding to this signal allows you to surround a new toplevel window with your chrome. 
+      You should return the newly created GtkMozEmbed object via the retval.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--visibility">
+    <title>The "visibility" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+    <methodparam><parameter>visibility</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>visibility</parameter>&nbsp;:</term>
+          <listitem><simpara> if <literal>True</literal> then the window should be shown. If it's <literal>False</literal> it should be hidden.</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "visibility" signal is emitted when the toplevel window in question needs to be shown or hidden.
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--destroy-browser">
+    <title>The "destroy-browser" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "destroy-browser" signal is emitted when the document as requested that the toplevel window be closed. 
+      This will happen in the case of a JavaScript window.close().
+    </para>
+  </refsect2>
+
+  <refsect2 id="signal-gtkmozembed--open-uri">
+    <title>The "open-uri" gtkmozembed.MozEmbed Signal</title>
+    <programlisting><methodsynopsis language="python">
+	  <methodname>callback</methodname>
+	  <methodparam><parameter>mozembed</parameter></methodparam>
+    <methodparam><parameter>uri</parameter></methodparam>
+	  <methodparam><parameter>data</parameter></methodparam>
+	  <methodparam><parameter>...</parameter></methodparam>
+	  </methodsynopsis></programlisting>
+
+    <variablelist>
+	    <varlistentry>
+	      <term><parameter>mozembed</parameter>&nbsp;:</term>
+	      <listitem><simpara>the mozembed that received the signal</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>uri</parameter>&nbsp;:</term>
+          <listitem><simpara> the uri that's going to be loaded.</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>data</parameter>&nbsp;:</term>
+          <listitem><simpara>additional data (if any) specified with the 
+          <link linkend="method-gobject--connect"><methodname>connect</methodname>()</link> method</simpara></listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><parameter>...</parameter>&nbsp;:</term>
+	      <listitem><simpara>additional user parameters (if any)</simpara></listitem>
+	    </varlistentry>
+    </variablelist>
+
+    <para>
+      The "open-uri" signal is emitted when when the document tries to load a new document, for example when someone clicks on a link in a web page. 
+      This signal gives the embedder the opportunity to keep the new document from being loaded. 
+      The <parameter>uri</parameter> argument is the uri that's going to be loaded.
+      If you return <literal>True</literal> from this signal, the new document will NOT be loaded. 
+      If you return <literal>False</literal> the new document will be loaded. 
+      This is somewhat non-intuitive. Think of it as the Mozilla engine is asking if you want to interrupt the loading of a new document. 
+      By returning <literal>True</literal> you are saying "don't load this document."
+    </para>
+  </refsect2>
+</refsect1>
+</refentry>
